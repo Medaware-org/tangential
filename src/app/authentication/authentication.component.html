@@ -1,7 +1,7 @@
 <canvas #backgroundCanvas id="background-canvas"></canvas>
 <div class="frosted-glass"></div>
 <p-toast position="top-right"></p-toast>
-<div class="flex justify-content-center align-items-center grid grid-nogutter auth-wrapper">
+<div class="flex flex-column justify-content-center align-items-center grid grid-nogutter auth-wrapper">
   @if (!loginService.loading()) {
     <p-card class="xl:col-4 lg:col-6 col-12 shadow-7" header="Tangential&trade;"
             subheader="Access the Tangential&trade; Content Management System">
@@ -9,6 +9,8 @@
       <app-login></app-login>
     </p-card>
   } @else {
-    <p-progressSpinner strokeWidth="6" [style]="{width: '50px', height: '50px'}" styleClass="auth-spinner" animationDuration=".8s"></p-progressSpinner>
+    <p-progressSpinner strokeWidth="6" [style]="{width: '70px', height: '70px'}" styleClass="auth-spinner"
+                       animationDuration=".8s"></p-progressSpinner>
+    <h2 class="text-white">Logging in ...</h2>
   }
 </div>

@@ -17,7 +17,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
       catchError((err: HttpErrorResponse) => {
         if (err.status == 401) {
           loginService.eraseSessionToken()
-          router.navigateByUrl('auth')
+          router.navigate(['/auth'])
         }
         return throwError(() => err);
       })

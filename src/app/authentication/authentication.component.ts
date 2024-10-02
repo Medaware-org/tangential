@@ -8,6 +8,7 @@ import {TabViewModule} from "primeng/tabview";
 import {ToastModule} from "primeng/toast";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {LoginService} from "../service/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-authentication',
@@ -37,9 +38,11 @@ export class AuthenticationComponent implements AfterViewInit {
   private lastTime: number = 0
   private phaseCounter: number = 0
 
-  private signatureColor = "rgba(240, 240, 240, 0.2)"
+  private signatureColor = "rgba(240, 240, 240, 0.15)"
 
-  constructor(protected loginService: LoginService) {
+  constructor(protected loginService: LoginService, private router: Router) {
+    if (loginService.isAuthenticated())
+      router.navigate(['/dash'])
   }
 
   private fitCanvas() {
@@ -54,7 +57,7 @@ export class AuthenticationComponent implements AfterViewInit {
     this.context.fillStyle = style
     this.context.beginPath()
 
-    for (let x = 0; x < window.innerWidth; x ++) {
+    for (let x = 0; x < window.innerWidth; x++) {
       let sineValue = Math.sin((2 * Math.PI * freq) * ((x + phaseOffset) / 2000)) * amplitude
       this.context.lineTo(x, window.innerHeight - 2 * amplitude - sineValue + yOffset)
     }
