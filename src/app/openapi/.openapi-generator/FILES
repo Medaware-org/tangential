@@ -9,6 +9,7 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/catalystError.ts
 model/models.ts
 model/tangentialLoginRequest.ts
 model/tangentialSessionResponse.ts

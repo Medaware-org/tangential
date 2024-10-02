@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, signal} from '@angular/core';
-import {TangentialService} from "../openapi";
+import {CatalystError, TangentialService} from "../openapi";
 import {FeedbackService} from "./feedback.service";
 
 @Injectable({
@@ -23,7 +23,7 @@ export class LoginService {
         this.loading.set(false)
       },
       error: err => {
-        this.feedbackService.err("Log-in Failed", "Invalid credentials")
+        this.feedbackService.catalystError(err)
         this.loading.set(false)
       },
     })

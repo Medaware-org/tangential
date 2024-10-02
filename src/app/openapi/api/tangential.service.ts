@@ -99,10 +99,10 @@ export class TangentialService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<TangentialSessionResponse>;
-    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<TangentialSessionResponse>>;
-    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<TangentialSessionResponse>>;
-    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<TangentialSessionResponse>;
+    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<TangentialSessionResponse>>;
+    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<TangentialSessionResponse>>;
+    public tangentialLogin(tangentialLoginRequest: TangentialLoginRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (tangentialLoginRequest === null || tangentialLoginRequest === undefined) {
             throw new Error('Required parameter tangentialLoginRequest was null or undefined when calling tangentialLogin.');
         }
@@ -113,8 +113,7 @@ export class TangentialService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'application/json',
-                'text/plain'
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }

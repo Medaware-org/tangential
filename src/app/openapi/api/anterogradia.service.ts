@@ -95,10 +95,10 @@ export class AnterogradiaService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public compileAnterogradia(body: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/html' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<string>;
-    public compileAnterogradia(body: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/html' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
-    public compileAnterogradia(body: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/html' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
-    public compileAnterogradia(body: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/html' | 'text/plain', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public compileAnterogradia(body: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/html', context?: HttpContext, transferCache?: boolean}): Observable<string>;
+    public compileAnterogradia(body: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/html', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
+    public compileAnterogradia(body: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/html', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+    public compileAnterogradia(body: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/html', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling compileAnterogradia.');
         }
@@ -109,8 +109,7 @@ export class AnterogradiaService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                'text/html',
-                'text/plain'
+                'text/html'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
