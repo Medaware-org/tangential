@@ -18,6 +18,7 @@ body {
   bottom: 0;
   right: 0;
   z-index: 1;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0) 100%);
   backdrop-filter: blur(15px);
 }
 
@@ -28,4 +29,32 @@ body {
   right: 0;
   bottom: 0;
   z-index: 2;
+}
+
+:host ::ng-deep .auth-spinner .p-progress-spinner-circle {
+  animation: auth-spinner-color 1s ease-in-out infinite, auth-spinner-dash 5s ease-in-out infinite;
+}
+
+@keyframes auth-spinner-color {
+  0%, 100% {
+    stroke: rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    stroke: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@keyframes auth-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
 }
