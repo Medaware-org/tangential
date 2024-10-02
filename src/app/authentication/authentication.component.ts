@@ -6,6 +6,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {Button} from "primeng/button";
 import {TabViewModule} from "primeng/tabview";
 import {ToastModule} from "primeng/toast";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {LoginService} from "../service/login.service";
 
 @Component({
   selector: 'app-authentication',
@@ -17,7 +19,8 @@ import {ToastModule} from "primeng/toast";
     InputTextModule,
     Button,
     TabViewModule,
-    ToastModule
+    ToastModule,
+    ProgressSpinnerModule
   ],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
@@ -26,6 +29,8 @@ export class AuthenticationComponent implements AfterViewInit {
 
   @ViewChild("backgroundCanvas") canvas!: ElementRef<HTMLCanvasElement>
 
+  protected loading: boolean = false
+
   private context: CanvasRenderingContext2D | undefined
   private canvasElement: HTMLCanvasElement | undefined
 
@@ -33,6 +38,9 @@ export class AuthenticationComponent implements AfterViewInit {
   private phaseCounter: number = 0
 
   private signatureColor = "rgba(240, 240, 240, 0.2)"
+
+  constructor(protected loginService: LoginService) {
+  }
 
   private fitCanvas() {
     this.canvasElement!.width = window.innerWidth + 5
