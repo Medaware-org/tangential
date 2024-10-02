@@ -1,1 +1,13 @@
-
+<form class="flex flex-column justify-content-center">
+  <p-floatLabel>
+    <input id="login-username" class="w-full" pInputText>
+    <label for="login-username">Username</label>
+  </p-floatLabel>
+  <p-floatLabel class="mt-5 mb-3">
+    <input id="login-password" class="w-full" pInputText>
+    <label for="login-username">Password</label>
+  </p-floatLabel>
+  <div class="flex flex-row justify-content-end">
+    <p-button icon="pi pi-sign-in" label="Log In" (click)="showStuff()"></p-button>
+  </div>
+</form>

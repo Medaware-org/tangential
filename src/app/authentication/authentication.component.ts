@@ -4,6 +4,8 @@ import {CardModule} from "primeng/card";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {InputTextModule} from "primeng/inputtext";
 import {Button} from "primeng/button";
+import {TabViewModule} from "primeng/tabview";
+import {ToastModule} from "primeng/toast";
 
 @Component({
   selector: 'app-authentication',
@@ -13,7 +15,9 @@ import {Button} from "primeng/button";
     CardModule,
     FloatLabelModule,
     InputTextModule,
-    Button
+    Button,
+    TabViewModule,
+    ToastModule
   ],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
