@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left :0;
+  z-index: 0;
+  background: linear-gradient(0deg, rgba(255, 195, 18,1.0) 0%, rgba(237, 76, 103,1.0) 100%);
+}
+
+.frosted-glass {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  backdrop-filter: blur(15px);
+}
+
+.auth-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+}
