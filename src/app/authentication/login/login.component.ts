@@ -4,8 +4,6 @@ import {InputGroupModule} from "primeng/inputgroup";
 import {ChipsModule} from "primeng/chips";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {Button} from "primeng/button";
-import {FeedbackService} from "../../service/feedback.service";
-import {TangentialService} from "../../openapi";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {LoginService} from "../../service/login.service";
 

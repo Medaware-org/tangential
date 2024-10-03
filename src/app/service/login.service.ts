@@ -1,8 +1,8 @@
 import {Injectable, signal} from '@angular/core';
-import {TangentialService} from "../openapi";
 import {FeedbackService} from "./feedback.service";
 import {TAN_TOKEN_LS_KEY} from "../constants"
 import {Router} from "@angular/router";
+import {TangentialAuthService} from "../openapi";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class LoginService {
 
   public loading = signal(false)
 
-  constructor(private tangentialApi: TangentialService, private feedbackService: FeedbackService, private router: Router) {
+  constructor(private tangentialAuthApi: TangentialAuthService, private feedbackService: FeedbackService, private router: Router) {
   }
 
   localStorageSessionToken(): string | undefined {
@@ -32,7 +32,7 @@ export class LoginService {
 
   login(username: string, password: string) {
     this.loading.set(true)
-    this.tangentialApi.tangentialLogin({
+    this.tangentialAuthApi.tangentialLogin({
       username,
       password
     }).subscribe({

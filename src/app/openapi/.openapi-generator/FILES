@@ -5,11 +5,13 @@ api/anterogradia.service.ts
 api/api.ts
 api/security.service.ts
 api/status.service.ts
-api/tangential.service.ts
+api/tangentialAuth.service.ts
+api/tangentialContent.service.ts
 configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/articleResponse.ts
 model/catalystError.ts
 model/models.ts
 model/tangentialLoginRequest.ts
