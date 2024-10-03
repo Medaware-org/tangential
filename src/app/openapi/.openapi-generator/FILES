@@ -3,6 +3,7 @@ README.md
 api.module.ts
 api/anterogradia.service.ts
 api/api.ts
+api/security.service.ts
 api/status.service.ts
 api/tangential.service.ts
 configuration.ts
