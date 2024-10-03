@@ -40,12 +40,19 @@ export class AuthenticationComponent implements AfterViewInit {
 
   private signatureColor = "rgba(240, 240, 240, 0.15)"
 
+  private canvasTop: number = 0
+  private canvasLeft: number = 0
+
   constructor(protected loginService: LoginService, private router: Router) {
     if (loginService.isAuthenticated())
       router.navigate(['/dash'])
   }
 
   private fitCanvas() {
+    this.canvasTop = window.scrollY!
+    this.canvasLeft = window.scrollX!
+    this.canvasElement?.style.setProperty('top', `${this.canvasTop}px`)
+    this.canvasElement?.style.setProperty('left', `${this.canvasLeft}px`)
     this.canvasElement!.width = window.innerWidth + 5
     this.canvasElement!.height = window.innerHeight
   }
@@ -59,11 +66,11 @@ export class AuthenticationComponent implements AfterViewInit {
 
     for (let x = 0; x < window.innerWidth; x++) {
       let sineValue = Math.sin((2 * Math.PI * freq) * ((x + phaseOffset) / 2000)) * amplitude
-      this.context.lineTo(x, window.innerHeight - 2 * amplitude - sineValue + yOffset)
+      this.context.lineTo(x, window.innerHeight - this.canvasTop - 2 * amplitude - sineValue + yOffset)
     }
 
-    this.context.lineTo(this.canvasElement.width + 20, window.innerHeight + 20)
-    this.context.lineTo(this.canvasElement.offsetLeft - 20, window.innerHeight + 20)
+    this.context.lineTo(this.canvasElement.width + this.canvasLeft + 20, window.innerHeight + this.canvasTop + 20)
+    this.context.lineTo(0, window.innerHeight + this.canvasTop + 20)
 
     this.context.closePath()
     this.context.fill()
