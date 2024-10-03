@@ -2,6 +2,7 @@ import {Injectable, signal} from '@angular/core';
 import {TangentialService} from "../openapi";
 import {FeedbackService} from "./feedback.service";
 import {TAN_TOKEN_LS_KEY} from "../constants"
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class LoginService {
 
   public loading = signal(false)
 
-  constructor(private tangentialApi: TangentialService, private feedbackService: FeedbackService) {
+  constructor(private tangentialApi: TangentialService, private feedbackService: FeedbackService, private router: Router) {
   }
 
   localStorageSessionToken(): string | undefined {
@@ -38,7 +39,12 @@ export class LoginService {
       next: token => {
         this.feedbackService.ok("Success", "Successfully Authenticated")
         this.storeSessionToken(token.token)
-        this.loading.set(false)
+
+        // Give the user some time to see the success message
+        setTimeout(() => {
+          this.router.navigate(['/dash'])
+          this.loading.set(false)
+        }, 1500)
       },
       error: err => {
         this.feedbackService.catalystError(err)
