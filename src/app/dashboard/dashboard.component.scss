@@ -1,10 +1,11 @@
 @import "primeng/resources/themes/lara-light-purple/theme.css";
 
+// I know it's tempting, but you *really* should not change this.
 $sidebar-entry-height: 3rem;
 
 .sidebar-entry {
   width: 100%;
-  font-size: $sidebar-entry-height - 1.2;
+  font-size: $sidebar-entry-height - 1.5;
   text-align: start;
   font-weight: lighter;
   height: $sidebar-entry-height;
@@ -16,10 +17,11 @@ $sidebar-entry-height: 3rem;
   overflow: hidden;
   text-overflow: ellipsis;
   text-wrap: nowrap;
+  background: transparent;
 }
 
 .sidebar-entry:hover {
-  background-color: var(--orange-400) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .sidebar-icon {
@@ -28,10 +30,19 @@ $sidebar-entry-height: 3rem;
   display: inline;
 }
 
+.sidebar {
+  background: linear-gradient(-45deg, var(--orange-500) 0%, var(--orange-400) 100%);
+}
+
 .separator-line {
   height: 0;
-  border-top: dashed rgba(255, 255, 255, 0.5) 1px;
+  border-top: dashed rgba(255, 255, 255, 0.7) 1px;
   width: 10%;
   margin-top: -1rem;
   margin-bottom: 1.6rem;
+}
+
+::ng-deep .sidebar-button .p-button {
+  background: transparent !important;
+  border: none;
 }

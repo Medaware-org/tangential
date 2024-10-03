@@ -24,17 +24,18 @@ export class FeedbackService {
     })
   }
 
-  catalystError(error: any) {
+  catalystError(error: any): boolean {
     if (error.hasOwnProperty('error')) {
       this.catalystError(error['error'])
-      return
+      return true
     }
 
     if (!error.hasOwnProperty('summary') || !error.hasOwnProperty('message'))
-      return // Not a Catalyst error
+      return false // Not a Catalyst error
 
     let catalystError = error as CatalystError
     this.err(catalystError.summary, catalystError.message)
+    return true
   }
 
 }

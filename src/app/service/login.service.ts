@@ -26,6 +26,20 @@ export class LoginService {
     localStorage.removeItem(TAN_TOKEN_LS_KEY)
   }
 
+  logout() {
+    this.tangentialAuthApi.tangentialLogout().subscribe({
+      next: _ => {
+        this.eraseSessionToken()
+        this.feedbackService.ok("Signed Out", "Your current session has been invalidated on the server")
+        this.router.navigate(['/auth'])
+      },
+      error: err => {
+        if (!this.feedbackService.catalystError(err))
+          this.feedbackService.err("Error", "Could not invalidate the session! Please contact the system administrator!")
+      }
+    })
+  }
+
   isAuthenticated() {
     return this.localStorageSessionToken() != undefined
   }
@@ -39,17 +53,13 @@ export class LoginService {
       next: token => {
         this.feedbackService.ok("Success", "Successfully Authenticated")
         this.storeSessionToken(token.token)
-
-        // Give the user some time to see the success message
-        setTimeout(() => {
-          this.router.navigate(['/dash'])
-          this.loading.set(false)
-        }, 1500)
+        this.router.navigate(['/dash'])
+        this.loading.set(false)
       },
       error: err => {
         this.feedbackService.catalystError(err)
         this.loading.set(false)
-      },
+      }
     })
   }
 
