@@ -3,13 +3,15 @@ import {SecurityService} from "../openapi";
 import {Button} from "primeng/button";
 import {LoginService} from "../service/login.service";
 import {ToastModule} from "primeng/toast";
+import {Ripple} from "primeng/ripple";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
     Button,
-    ToastModule
+    ToastModule,
+    Ripple
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
