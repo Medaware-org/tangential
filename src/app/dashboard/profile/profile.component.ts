@@ -3,8 +3,10 @@ import {ChipsModule} from "primeng/chips";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
-import {LoginService} from "../../service/login.service";
+import {AccountService} from "../../service/account.service";
 import {Button} from "primeng/button";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {SpinnerModule} from "primeng/spinner";
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +17,9 @@ import {Button} from "primeng/button";
     ReactiveFormsModule,
     NgClass,
     Button,
-    NgIf
+    NgIf,
+    ProgressSpinnerModule,
+    SpinnerModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
@@ -28,21 +32,39 @@ export class ProfileComponent {
     displayName: new FormControl("", [Validators.required])
   })
 
-  constructor(private loginService: LoginService) {
+  constructor(protected accountService: AccountService) {
     this.insertInitialValues()
   }
 
   insertInitialValues() {
     this.profileDetails.setValue({
-      firstName: this.loginService.currentUser?.firstName || "",
-      lastName: this.loginService.currentUser?.lastName || "",
-      displayName: this.loginService.currentUser?.displayName || ""
+      firstName: this.accountService.currentUser?.firstName || "",
+      lastName: this.accountService.currentUser?.lastName || "",
+      displayName: this.accountService.currentUser?.displayName || ""
     })
   }
 
   cancelEdits() {
     this.profileDetails.reset()
     this.insertInitialValues()
+  }
+
+  updatedFieldValue(fieldName: string): string | undefined {
+    let field = this.profileDetails.get(fieldName)
+    if (!field || !field.dirty)
+      return undefined
+    return field.value
+  }
+
+  commitProfileUpdates() {
+    this.accountService.updateUserDetails({
+      firstName: this.updatedFieldValue("firstName"),
+      lastName: this.updatedFieldValue("lastName"),
+      displayName: this.updatedFieldValue("displayName")
+    }, () => {
+      this.profileDetails.reset()
+      this.insertInitialValues()
+    })
   }
 
 }

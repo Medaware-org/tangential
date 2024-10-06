@@ -7,7 +7,7 @@ import {Button} from "primeng/button";
 import {TabViewModule} from "primeng/tabview";
 import {ToastModule} from "primeng/toast";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
-import {LoginService} from "../service/login.service";
+import {AccountService} from "../service/account.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -43,8 +43,8 @@ export class AuthenticationComponent implements AfterViewInit {
   private canvasTop: number = 0
   private canvasLeft: number = 0
 
-  constructor(protected loginService: LoginService, private router: Router) {
-    if (loginService.isAuthenticated())
+  constructor(protected accountService: AccountService, private router: Router) {
+    if (accountService.isAuthenticated())
       router.navigate(['/dash'])
   }
 

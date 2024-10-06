@@ -2,14 +2,15 @@ import {Injectable, signal} from '@angular/core';
 import {FeedbackService} from "./feedback.service";
 import {TAN_TOKEN_LS_KEY} from "../constants"
 import {Router} from "@angular/router";
-import {BasicMaintainerResponse, TangentialAuthService} from "../openapi";
+import {AccountUpdateRequest, BasicMaintainerResponse, TangentialAuthService} from "../openapi";
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AccountService {
 
   public loading = signal(false)
+  public accountUpdating = signal(false)
 
   public currentUser: BasicMaintainerResponse | undefined = undefined
 
@@ -20,6 +21,22 @@ export class LoginService {
     this.tangentialAuthApi.tangentialWhoAmI().subscribe({
       next: maintainer => {
         this.currentUser = maintainer
+      }
+    })
+  }
+
+  updateUserDetails(request: AccountUpdateRequest, then: () => void) {
+    this.accountUpdating.set(true)
+    this.tangentialAuthApi.updateProfileDetails(request).subscribe({
+      next: resp => {
+        this.retrieveCurrentUser()
+        this.feedbackService.ok("Account Updated", "Successfully updated account details")
+        then()
+        this.accountUpdating.set(false)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+        this.accountUpdating.set(false)
       }
     })
   }

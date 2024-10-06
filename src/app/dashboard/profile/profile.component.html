@@ -1,6 +1,7 @@
 <h1>Profile</h1>
 <div class="mt-7"></div>
-<form [formGroup]="profileDetails" class="flex flex-column profile-data-container gap-5">
+<form [formGroup]="profileDetails" class="flex flex-column profile-data-container gap-5"
+      *ngIf="!accountService.accountUpdating()">
   <div class="flex flex-row justify-content-center align-items-center gap-6">
       <span class="pi pi-circle-on text-sm text-indigo-200"
             [ngClass]="{ 'pi-circle-on': profileDetails.get('firstName')?.dirty,
@@ -30,6 +31,11 @@
   </div>
   <div class="flex flex-row justify-content-end gap-3" *ngIf="profileDetails.dirty">
     <p-button severity="danger" (click)="cancelEdits()">Cancel</p-button>
-    <p-button outlined>Commit</p-button>
+    <p-button outlined (click)="commitProfileUpdates()">Commit</p-button>
   </div>
 </form>
+<div class="flex flex-column justify-content-center align-items-center w-full mt-8"
+     *ngIf="accountService.accountUpdating()">
+  <p-progressSpinner></p-progressSpinner>
+  <h2>Updating Account Details ...</h2>
+</div>

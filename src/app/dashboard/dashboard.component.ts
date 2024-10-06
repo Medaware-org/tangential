@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Button} from "primeng/button";
-import {LoginService} from "../service/login.service";
+import {AccountService} from "../service/account.service";
 import {ToastModule} from "primeng/toast";
 import {Ripple} from "primeng/ripple";
 import {BasicMaintainerResponse, TangentialAuthService} from "../openapi";
@@ -21,17 +21,17 @@ import {RouterLink, RouterOutlet} from "@angular/router";
 })
 export class DashboardComponent {
 
-  constructor(securityService: TangentialAuthService, private loginService: LoginService) {
+  constructor(securityService: TangentialAuthService, private accountService: AccountService) {
     // When this returns UNAUTHORIZED, the interceptor will erase the token and return to the login screen.
-    loginService.retrieveCurrentUser()
+    accountService.retrieveCurrentUser()
   }
 
   signOut() {
-    this.loginService.logout()
+    this.accountService.logout()
   }
 
   currentUser(): BasicMaintainerResponse {
-    return this.loginService.currentUser!
+    return this.accountService.currentUser!
   }
 
 }

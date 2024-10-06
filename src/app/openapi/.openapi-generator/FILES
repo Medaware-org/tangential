@@ -10,10 +10,13 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
+model/accountUpdateRequest.ts
+model/alterElementRequest.ts
 model/articleCreationRequest.ts
 model/articleResponse.ts
 model/basicMaintainerResponse.ts
 model/catalystError.ts
+model/deleteElementRequest.ts
 model/elementInsertRequest.ts
 model/elementResponse.ts
 model/metadataCreateRequest.ts

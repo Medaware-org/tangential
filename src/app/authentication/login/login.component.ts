@@ -5,7 +5,7 @@ import {ChipsModule} from "primeng/chips";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {Button} from "primeng/button";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {LoginService} from "../../service/login.service";
+import {AccountService} from "../../service/account.service";
 
 @Component({
   selector: 'app-login',
@@ -28,11 +28,11 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required])
   })
 
-  constructor(protected loginService: LoginService) {
+  constructor(protected accountService: AccountService) {
   }
 
   login() {
-    this.loginService.login(this.loginForm.get('username')?.value || "", this.loginForm.get('password')?.value || "")
+    this.accountService.login(this.loginForm.get('username')?.value || "", this.loginForm.get('password')?.value || "")
   }
 
 }

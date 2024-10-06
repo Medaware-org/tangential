@@ -1,14 +1,14 @@
 import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
 import {inject} from "@angular/core";
-import {LoginService} from "../service/login.service";
+import {AccountService} from "../service/account.service";
 import {catchError, throwError} from "rxjs";
 import {Router} from "@angular/router";
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  let loginService = inject(LoginService)
+  let accountService = inject(AccountService)
   let router = inject(Router)
 
-  let token = loginService.localStorageSessionToken()
+  let token = accountService.localStorageSessionToken()
 
   if (token)
     return next(req.clone({
@@ -16,7 +16,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     })).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status == 401) {
-          loginService.eraseSessionToken()
+          accountService.eraseSessionToken()
           router.navigate(['/auth'])
         }
         return throwError(() => err);
