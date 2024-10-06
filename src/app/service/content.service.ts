@@ -15,6 +15,7 @@ export class ContentService {
 
   loadArticles(onlyOwn: boolean) {
     this.articlesLoading.set(true)
+    this.articles.set([])
     this.tangentialContent.listArticles(onlyOwn ? "current" : "all").subscribe({
       next: articles => {
         this.articles.set(articles)

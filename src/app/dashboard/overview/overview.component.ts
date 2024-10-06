@@ -4,6 +4,7 @@ import {ContentService} from "../../service/content.service";
 import {Button} from "primeng/button";
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule} from "@angular/forms";
+import {SelectButtonModule} from "primeng/selectbutton";
 
 @Component({
   selector: 'app-overview',
@@ -13,7 +14,8 @@ import {FormsModule} from "@angular/forms";
     Button,
     DropdownModule,
     DropdownModule,
-    FormsModule
+    FormsModule,
+    SelectButtonModule
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
