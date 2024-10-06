@@ -42,11 +42,11 @@ export const routes: Routes = [
   },
   {
     path: "",
-    component: DashboardComponent,
-    canActivate: [authGuard]
+    pathMatch: "full",
+    redirectTo: "/dash/overview",
   },
   {
-    path: "",
+    path: "**",
     component: AuthenticationComponent
   }
 ];
