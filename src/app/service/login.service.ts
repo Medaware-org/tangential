@@ -2,7 +2,7 @@ import {Injectable, signal} from '@angular/core';
 import {FeedbackService} from "./feedback.service";
 import {TAN_TOKEN_LS_KEY} from "../constants"
 import {Router} from "@angular/router";
-import {TangentialAuthService} from "../openapi";
+import {BasicMaintainerResponse, TangentialAuthService} from "../openapi";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,17 @@ export class LoginService {
 
   public loading = signal(false)
 
+  public currentUser: BasicMaintainerResponse | undefined = undefined
+
   constructor(private tangentialAuthApi: TangentialAuthService, private feedbackService: FeedbackService, private router: Router) {
+  }
+
+  retrieveCurrentUser() {
+    this.tangentialAuthApi.tangentialWhoAmI().subscribe({
+      next: maintainer => {
+        this.currentUser = maintainer
+      }
+    })
   }
 
   localStorageSessionToken(): string | undefined {
@@ -34,7 +44,7 @@ export class LoginService {
         this.router.navigate(['/auth'])
       },
       error: err => {
-        if (!this.feedbackService.catalystError(err))
+        if (!this.feedbackService.catalystError(err, false))
           this.feedbackService.err("Error", "Could not invalidate the session! Please contact the system administrator!")
       }
     })

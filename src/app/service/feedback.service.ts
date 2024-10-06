@@ -24,14 +24,15 @@ export class FeedbackService {
     })
   }
 
-  catalystError(error: any): boolean {
-    if (error.hasOwnProperty('error')) {
-      this.catalystError(error['error'])
-      return true
-    }
+  catalystError(error: any, handleDefault: boolean = true): boolean {
+    if (error.hasOwnProperty('error'))
+      return this.catalystError(error['error'], handleDefault)
 
-    if (!error.hasOwnProperty('summary') || !error.hasOwnProperty('message'))
+    if (!error.hasOwnProperty('summary') || !error.hasOwnProperty('message')) {
+      if (handleDefault)
+        this.err("Error", "An error occurred")
       return false // Not a Catalyst error
+    }
 
     let catalystError = error as CatalystError
     this.err(catalystError.summary, catalystError.message)

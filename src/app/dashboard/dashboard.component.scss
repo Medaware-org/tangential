@@ -4,7 +4,6 @@
 $sidebar-entry-height: 3rem;
 
 .sidebar-entry {
-  width: 100%;
   font-size: $sidebar-entry-height - 1.5;
   text-align: start;
   font-weight: lighter;
@@ -17,6 +16,12 @@ $sidebar-entry-height: 3rem;
   text-overflow: ellipsis;
   text-wrap: nowrap;
   background: transparent;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebar-entry:hover {
@@ -29,10 +34,6 @@ $sidebar-entry-height: 3rem;
   display: inline;
 }
 
-.sidebar {
-  background: linear-gradient(-45deg, var(--orange-500) 0%, var(--orange-400) 100%);
-}
-
 .separator-line {
   height: 0;
   border-top: dashed rgba(255, 255, 255, 0.7) 1px;
@@ -41,7 +42,23 @@ $sidebar-entry-height: 3rem;
   margin-bottom: 1.6rem;
 }
 
-::ng-deep .sidebar-button .p-button {
+:host ::ng-deep .sidebar-button .p-button {
   background: transparent !important;
   border: none;
+  transition: 0s;
+}
+
+.sidebar-entry-inside {
+  width: 190px;
+}
+
+.sidebar {
+  //background: linear-gradient(-45deg, rgba(255, 195, 18,1.0) -40%, rgba(237, 76, 103,1.0) 120%);
+  z-index: 1;
+}
+
+html, body {
+  height: 100% !important; /* Ensure body takes full height */
+  margin: 0 !important;    /* Remove default margin */
+  padding: 0 !important;   /* Remove default padding */
 }
