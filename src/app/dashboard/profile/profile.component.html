@@ -29,9 +29,9 @@
       <label for="display-name">Display Name</label>
     </p-floatLabel>
   </div>
-  <div class="flex flex-row justify-content-end gap-3" *ngIf="profileDetails.dirty">
-    <p-button severity="danger" (click)="cancelEdits()">Cancel</p-button>
-    <p-button outlined (click)="commitProfileUpdates()">Commit</p-button>
+  <div class="flex flex-row justify-content-end gap-3">
+    <p-button severity="danger" (click)="cancelEdits()" [disabled]="!profileDetails.dirty">Cancel</p-button>
+    <p-button outlined (click)="commitProfileUpdates()" [disabled]="!profileDetails.dirty">Commit</p-button>
   </div>
 </form>
 <div class="flex flex-column justify-content-center align-items-center w-full mt-8"
