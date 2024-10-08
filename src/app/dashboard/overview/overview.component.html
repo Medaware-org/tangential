@@ -1,3 +1,11 @@
+<p-confirmDialog header="Do you want to proceed?">
+  <ng-template pTemplate="message" let-message>
+    <div class="flex flex-row gap-3">
+      <i class="pi pi-exclamation-circle text-6xl text-primary-500"></i>
+      <p>{{ message.message }}</p>
+    </div>
+  </ng-template>
+</p-confirmDialog>
 <div class="flex flex-row justify-content-between align-items-center w-full">
   <h1>Content</h1>
   <div class="inline-flex flex-row justify-content-center align-items-center gap-3">
@@ -28,7 +36,8 @@
       <th>
         <div class="flex justify-content-start gap-2">
           <p-button icon="pi pi-pencil" size="small" outlined></p-button>
-          <p-button icon="pi pi-trash" severity="danger" size="small" outlined></p-button>
+          <p-button icon="pi pi-trash" severity="danger" size="small" (click)="deleteArticle(article)"
+                    outlined></p-button>
         </div>
       </th>
     </tr>

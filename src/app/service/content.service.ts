@@ -28,4 +28,19 @@ export class ContentService {
     })
   }
 
+  deleteArticle(article: ArticleResponse, then: () => void = () => {
+  }) {
+    this.tangentialContent.deleteArticle({
+      id: article.id!
+    }).subscribe({
+      next: _ => {
+        this.feedbackService.ok("Article removed", `Successfully removed article '${article.title}' by '${article.author}'`)
+        then()
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {ChipsModule} from "primeng/chips";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -7,6 +7,7 @@ import {AccountService} from "../../service/account.service";
 import {Button} from "primeng/button";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {SpinnerModule} from "primeng/spinner";
+import {DialogModule} from "primeng/dialog";
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +20,8 @@ import {SpinnerModule} from "primeng/spinner";
     Button,
     NgIf,
     ProgressSpinnerModule,
-    SpinnerModule
+    SpinnerModule,
+    DialogModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'

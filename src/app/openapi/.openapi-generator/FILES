@@ -16,6 +16,7 @@ model/articleCreationRequest.ts
 model/articleResponse.ts
 model/basicMaintainerResponse.ts
 model/catalystError.ts
+model/deleteArticleRequest.ts
 model/deleteElementRequest.ts
 model/elementInsertRequest.ts
 model/elementResponse.ts

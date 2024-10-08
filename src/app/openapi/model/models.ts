@@ -4,6 +4,7 @@ export * from './articleCreationRequest';
 export * from './articleResponse';
 export * from './basicMaintainerResponse';
 export * from './catalystError';
+export * from './deleteArticleRequest';
 export * from './deleteElementRequest';
 export * from './elementInsertRequest';
 export * from './elementResponse';

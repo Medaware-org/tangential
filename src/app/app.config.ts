@@ -2,7 +2,7 @@ import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {provideAnimations} from "@angular/platform-browser/animations";
 import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {tokenInterceptor} from "./interceptor/token.interceptor";
@@ -15,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(
       withInterceptors([tokenInterceptor])
-    )
+    ),
+    ConfirmationService
   ]
 };
