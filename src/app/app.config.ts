@@ -1,5 +1,5 @@
 import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
-import {provideRouter} from '@angular/router';
+import {provideRouter, withComponentInputBinding} from '@angular/router';
 
 import {routes} from './app.routes';
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -10,7 +10,7 @@ import {tokenInterceptor} from "./interceptor/token.interceptor";
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     MessageService,
     provideAnimations(),
     provideHttpClient(

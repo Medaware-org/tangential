@@ -43,4 +43,19 @@ export class ContentService {
     })
   }
 
+  createArticle(title: string, then: () => void = () => {
+  }) {
+    this.tangentialContent.createArticle({
+      title
+    }).subscribe({
+      next: resp => {
+        this.feedbackService.ok("Article Created", `Successfully created a new article '${resp.title}'`)
+        then()
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
 }

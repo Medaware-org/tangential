@@ -1,3 +1,18 @@
+<p-dialog header="Create a New Article" [modal]="true" [draggable]="false" [(visible)]="creationDialogVisible"
+          [style]="{ width: '20%' }">
+  <form [formGroup]="creationForm" (ngSubmit)="createArticle()">
+    <div class="flex flex-column justify-content-center gap-4">
+      <div class="flex flex-row w-full justify-content-evenly align-items-center mt-2">
+        <label for="username" class="mr-4 font-semibold">Title</label>
+        <input pInputText class="flex-1" id="username" formControlName="title"/>
+      </div>
+      <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="danger" (onClick)="creationDialogVisible = false" outlined/>
+        <p-button label="Save" severity="primary" type="submit" [disabled]="creationForm.invalid" />
+      </div>
+    </div>
+  </form>
+</p-dialog>
 <p-confirmDialog header="Do you want to proceed?">
   <ng-template pTemplate="message" let-message>
     <div class="flex flex-row gap-3">
@@ -7,7 +22,10 @@
   </ng-template>
 </p-confirmDialog>
 <div class="flex flex-row justify-content-between align-items-center w-full">
-  <h1>Content</h1>
+  <div class="flex flex-row justify-content-center align-items-center gap-4">
+    <h1>Articles</h1>
+    <p-button severity="success" icon="pi pi-plus" outlined (click)="initArticleCreation()"></p-button>
+  </div>
   <div class="inline-flex flex-row justify-content-center align-items-center gap-3">
     <span>Show</span>
     <p-selectButton [options]="selectorChoices" [(ngModel)]="articleSelector" (onChange)="reloadArticles()"
@@ -43,7 +61,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="summary">
-    <div class="flex align-items-center justify-content-between">
+    <div class="flex align-items-center justify-content-between mt-1">
       @if (contentService.articles().length == 0) {
         No articles found.
       } @else {

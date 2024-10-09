@@ -6,6 +6,7 @@ import {OverviewComponent} from "./dashboard/overview/overview.component";
 import {ProfileComponent} from "./dashboard/profile/profile.component";
 import {MaintenanceComponent} from "./dashboard/maintenance/maintenance.component";
 import {AnalyticsComponent} from "./dashboard/analytics/analytics.component";
+import {EditorComponent} from "./editor/editor/editor.component";
 
 export const routes: Routes = [
   {
@@ -39,6 +40,11 @@ export const routes: Routes = [
         redirectTo: '/dash/overview'
       }
     ]
+  },
+  {
+    path: "editor/:id",
+    component: EditorComponent,
+    canActivate: [authGuard],
   },
   {
     path: "",
