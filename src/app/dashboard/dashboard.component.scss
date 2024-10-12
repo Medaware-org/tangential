@@ -57,8 +57,6 @@ $sidebar-entry-height: 3rem;
   z-index: 1;
 }
 
-html, body {
-  height: 100% !important; /* Ensure body takes full height */
-  margin: 0 !important;    /* Remove default margin */
-  padding: 0 !important;   /* Remove default padding */
+::ng-deep body {
+  margin-bottom: 0 !important;
 }

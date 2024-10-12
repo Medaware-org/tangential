@@ -1,1 +1,26 @@
-<p>editor for {{ id }} works!</p>
+<div class="h-screen">
+  <p-menubar [model]="toolbarItems">
+    <p-button icon="pi pi-plus" class="mr-4" severity="success" pTooltip="New Element ..."></p-button>
+    <p-button label="Home" icon="pi pi-home" routerLink="/dash/overview" outlined></p-button>
+  </p-menubar>
+  <div class="grid grid-nogutter h-full">
+    <div class="xl:col-10 col-12 surface-50 max-h-full overflow-y-auto px-8 pt-4" [innerHTML]="contentService.renderedHtml()">
+    </div>
+    <div class="xl:col-2 col-12 bg-white">
+      <p-tabView>
+        <p-tabPanel header="Elements">
+          <div class="flex flex-column align-items-stretch justify-content-start gap-3">
+            @for (element of contentService.elements(); track element.id) {
+              <p-button
+                [classList]="[(contentService.selectedElement()?.handle == element.handle) ? 'element-button-selected' : 'element-button']"
+                (click)="contentService.selectElement(element)" [pTooltip]="element.id"
+                [label]="element.handle"></p-button>
+            }
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="Properties">
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</div>

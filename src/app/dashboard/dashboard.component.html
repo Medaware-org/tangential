@@ -32,10 +32,10 @@
     </div>
     <div class="flex-grow-1"></div>
     <div class="flex flex-row justify-content-evenly">
-      <p-button label="Log out" icon="pi pi-sign-out" class="sidebar-button" (click)="signOut()"></p-button>
+      <p-button label="Log out" icon="pi pi-sign-out" size="large" class="sidebar-button" (click)="signOut()"></p-button>
     </div>
   </div>
-  <div class="xl:col-10 lg:col-8 col-12 surface-100 px-6 py-5">
+  <div class="xl:col-10 lg:col-8 col-12 surface-100 px-6 py-5 max-h-full overflow-y-auto">
     <router-outlet></router-outlet>
   </div>
 </div>

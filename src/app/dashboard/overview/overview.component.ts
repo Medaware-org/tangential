@@ -11,6 +11,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import {ArticleResponse} from "../../openapi";
 import {FloatLabelModule} from "primeng/floatlabel";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-overview',
@@ -46,7 +47,7 @@ export class OverviewComponent {
     title: new FormControl('', [Validators.required])
   })
 
-  constructor(protected contentService: ContentService, private confirmationService: ConfirmationService) {
+  constructor(protected contentService: ContentService, private confirmationService: ConfirmationService, private router: Router) {
     this.reloadArticles()
   }
 
@@ -68,6 +69,10 @@ export class OverviewComponent {
   initArticleCreation() {
     this.creationForm.reset()
     this.creationDialogVisible = true
+  }
+
+  editArticle(id: string) {
+    this.router.navigate([`/editor/${id}`])
   }
 
   createArticle() {

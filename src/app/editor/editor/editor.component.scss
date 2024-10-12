@@ -1,0 +1,24 @@
+::ng-deep body, html {
+  background-color: var(--surface-100) !important;
+  margin: 0;
+}
+
+::ng-deep .p-menubar {
+  background-color: white;
+}
+
+@mixin element-button-base {
+  width: 100%;
+}
+
+:host ::ng-deep .element-button .p-button {
+  @include element-button-base();
+  background-color: transparent;
+  color: var(--primary-500);
+}
+
+:host ::ng-deep .element-button-selected .p-button {
+  @include element-button-base();
+  background-color: var(--primary-500);
+  color: white;
+}

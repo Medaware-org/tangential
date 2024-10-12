@@ -17,10 +17,12 @@ export class AccountService {
   constructor(private tangentialAuthApi: TangentialAuthService, private feedbackService: FeedbackService, private router: Router) {
   }
 
-  retrieveCurrentUser() {
+  retrieveCurrentUser(then: () => void = () => {
+  }) {
     this.tangentialAuthApi.tangentialWhoAmI().subscribe({
       next: maintainer => {
         this.currentUser = maintainer
+        then()
       }
     })
   }
@@ -29,10 +31,11 @@ export class AccountService {
     this.accountUpdating.set(true)
     this.tangentialAuthApi.updateProfileDetails(request).subscribe({
       next: resp => {
-        this.retrieveCurrentUser()
-        this.feedbackService.ok("Account Updated", "Successfully updated account details")
-        then()
-        this.accountUpdating.set(false)
+        this.retrieveCurrentUser(() => {
+          this.feedbackService.ok("Account Updated", "Successfully updated account details")
+          this.accountUpdating.set(false)
+          then()
+        })
       },
       error: err => {
         this.feedbackService.catalystError(err)
