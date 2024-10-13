@@ -10,10 +10,8 @@
  */
 
 
-export interface ElementInsertRequest { 
-    article: string;
-    after?: string;
-    handle: string;
-    type?: string;
+export interface ElementTypeRequirement { 
+    type: string;
+    requirements: Array<string>;
 }
 

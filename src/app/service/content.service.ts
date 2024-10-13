@@ -97,4 +97,21 @@ export class ContentService {
     })
   }
 
+  createElement(articleId: string, handle: string, type: string) {
+    this.tangentialContent.insertElement({
+      article: articleId,
+      after: this.elements()[this.elements().length - 1].id,
+      handle: handle,
+      type: type
+    }).subscribe({
+      next: resp => {
+        this.loadElements(articleId)
+        this.render(articleId)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
 }

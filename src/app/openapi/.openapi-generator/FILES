@@ -1,10 +1,12 @@
 .gitignore
 README.md
 api.module.ts
+api/aVIS.service.ts
 api/anterogradia.service.ts
 api/api.ts
 api/status.service.ts
 api/tangentialAuth.service.ts
+api/tangentialAuxiliary.service.ts
 api/tangentialContent.service.ts
 configuration.ts
 encoder.ts
@@ -20,6 +22,7 @@ model/deleteArticleRequest.ts
 model/deleteElementRequest.ts
 model/elementInsertRequest.ts
 model/elementResponse.ts
+model/elementTypeRequirement.ts
 model/metadataCreateRequest.ts
 model/metadataEntry.ts
 model/models.ts
