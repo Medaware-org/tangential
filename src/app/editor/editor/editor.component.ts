@@ -16,6 +16,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {ElementTypeRequirement, TangentialAuxiliaryService} from "../../openapi";
 import {FeedbackService} from "../../service/feedback.service";
 import {FloatLabelModule} from "primeng/floatlabel";
+import {TitleCasePipe} from "@angular/common";
 
 @Component({
   selector: 'app-editor',
@@ -32,7 +33,8 @@ import {FloatLabelModule} from "primeng/floatlabel";
     InputTextModule,
     PaginatorModule,
     ReactiveFormsModule,
-    FloatLabelModule
+    FloatLabelModule,
+    TitleCasePipe
   ],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss'
@@ -44,15 +46,23 @@ export class EditorComponent implements AfterViewInit {
   toolbarItems: MenuItem[] = [
     {
       label: "Heading",
-      icon: "pi pi-bookmark-fill"
+      icon: "pi pi-bookmark-fill",
+      command: () => this.openNewElementDialog("HEADING")
     },
     {
       label: "Sub-Heading",
-      icon: "pi pi-bookmark"
+      icon: "pi pi-bookmark",
+      command: () => this.openNewElementDialog("SUBHEADING")
     },
     {
       label: "Image",
-      icon: "pi pi-image"
+      icon: "pi pi-image",
+      command: () => this.openNewElementDialog("IMAGE")
+    },
+    {
+      label: "Text",
+      icon: "pi pi-align-left",
+      command: () => this.openNewElementDialog("TEXT")
     }
   ]
 
@@ -65,10 +75,13 @@ export class EditorComponent implements AfterViewInit {
 
   protected elementTypes: WritableSignal<ElementTypeRequirement[]> = signal([])
 
+  protected valueConstraints: WritableSignal<Map<string, string[]>> = signal(new Map<string, string[]>())
+
   constructor(protected contentService: ContentService, protected auxService: TangentialAuxiliaryService, private feedbackService: FeedbackService, private router: Router) {
   }
 
   ngAfterViewInit(): void {
+    this.loadValueConstraints()
     this.loadElementTypes()
     this.loadElements()
     this.contentService.render(this.id)
@@ -90,16 +103,12 @@ export class EditorComponent implements AfterViewInit {
     this.contentService.loadElements(this.id)
   }
 
-  openNewElementDialog() {
+  openNewElementDialog(type: string = "BLANK_PLACEHOLDER") {
     this.newElementFormGroup.reset()
     this.newElementFormGroup.patchValue({
-      elementType: (this.elementTypes())[0]
+      elementType: this.elementTypes().find((v: ElementTypeRequirement) => v.type == type)
     })
     this.newElementDialogVisible.set(true)
-  }
-
-  returnToDashboard() {
-    this.router.navigate(['/dash'])
   }
 
   createNewElement() {
@@ -109,6 +118,25 @@ export class EditorComponent implements AfterViewInit {
       return
 
     this.contentService.createElement(this.id, this.newElementFormGroup.get('handle')?.value!, this.newElementFormGroup.get('elementType')?.value!.type!)
+  }
+
+  loadValueConstraints() {
+    this.auxService.getMetaEntryValueConstraints().subscribe({
+      next: resp => {
+        let constraints = new Map<string, string[]>()
+        resp.forEach((element) => {
+          constraints.set(element.key!, element.constraints!)
+        })
+        this.valueConstraints.set(constraints)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
+  constraintsOf(metaEntry: string): string[] {
+    return this.valueConstraints().get(metaEntry) || []
   }
 
 }

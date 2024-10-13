@@ -9,6 +9,7 @@ export * from './deleteElementRequest';
 export * from './elementInsertRequest';
 export * from './elementResponse';
 export * from './elementTypeRequirement';
+export * from './getMetaEntryValueConstraints200ResponseInner';
 export * from './metadataCreateRequest';
 export * from './metadataEntry';
 export * from './tangentialLoginRequest';

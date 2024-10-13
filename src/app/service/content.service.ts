@@ -1,5 +1,5 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {ArticleResponse, ElementResponse, TangentialContentService} from "../openapi";
+import {ArticleResponse, ElementResponse, MetadataEntry, TangentialContentService} from "../openapi";
 import {FeedbackService} from "./feedback.service";
 
 @Injectable({
@@ -16,6 +16,8 @@ export class ContentService {
 
   public renderedHtml: WritableSignal<string> = signal("")
   public rendererRunning: WritableSignal<boolean> = signal(false)
+
+  public selectedElementMetadata: WritableSignal<MetadataEntry[]> = signal([])
 
   constructor(private tangentialContent: TangentialContentService, private feedbackService: FeedbackService) {
   }
@@ -37,6 +39,7 @@ export class ContentService {
 
   selectElement(element: ElementResponse) {
     this.selectedElement.set(element)
+    this.loadMetadataOfSelectedElement()
   }
 
   deleteArticle(article: ArticleResponse, then: () => void = () => {
@@ -107,6 +110,20 @@ export class ContentService {
       next: resp => {
         this.loadElements(articleId)
         this.render(articleId)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
+  loadMetadataOfSelectedElement() {
+    if (this.selectedElement() == undefined)
+      return
+
+    this.tangentialContent.getMetadata(this.selectedElement()!.id).subscribe({
+      next: listing => {
+        this.selectedElementMetadata.set(listing)
       },
       error: err => {
         this.feedbackService.catalystError(err)

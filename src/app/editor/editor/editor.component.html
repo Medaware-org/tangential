@@ -15,17 +15,15 @@
     </div>
   </form>
 </p-dialog>
-<div class="h-screen">
+<div class="h-screen overflow-hidden">
   <p-menubar [model]="toolbarItems">
-    <p-button icon="pi pi-plus" class="mr-4" severity="success" pTooltip="New Element ..."
-              (click)="openNewElementDialog()"></p-button>
     <p-button label="Home" icon="pi pi-home" routerLink="/dash/overview" outlined></p-button>
   </p-menubar>
   <div class="grid grid-nogutter h-full">
-    <div class="xl:col-10 col-12 surface-50 max-h-full overflow-y-auto px-8 pt-4"
-         [innerHTML]="contentService.renderedHtml()">
+    <div class="xl:col-10 col-12 surface-100 max-h-full px-8 pt-4 overflow-y-auto">
+      <div [innerHTML]="contentService.renderedHtml()" class="mb-8"></div>
     </div>
-    <div class="xl:col-2 col-12 bg-white">
+    <div class="xl:col-2 col-12 bg-white max-h-full overflow-auto">
       <p-tabView>
         <p-tabPanel header="Elements">
           <div class="flex flex-column align-items-stretch justify-content-start gap-3">
@@ -37,7 +35,20 @@
             }
           </div>
         </p-tabPanel>
-        <p-tabPanel header="Properties">
+        <p-tabPanel header="Properties" [disabled]="contentService.selectedElement() == undefined">
+          <div class="flex flex-column align-items-stretch justify-content-start gap-5">
+            <div></div>
+            @for (entry of contentService.selectedElementMetadata(); track entry.id) {
+              <p-floatLabel>
+                @if (this.constraintsOf(entry.key).length > 0) {
+                  <p-dropdown id="{{entry.key}}" styleClass="w-full" [options]="this.constraintsOf(entry.key)"></p-dropdown>
+                } @else {
+                  <input pInputText id="{{entry.key}}" class="w-full" value="{{entry.value}}"/>
+                }
+                <label for="{{entry.key}}">{{ entry.key }}</label>
+              </p-floatLabel>
+            }
+          </div>
         </p-tabPanel>
       </p-tabView>
     </div>
