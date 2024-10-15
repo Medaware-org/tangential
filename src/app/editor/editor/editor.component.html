@@ -15,23 +15,25 @@
     </div>
   </form>
 </p-dialog>
+<p-confirmDialog></p-confirmDialog>
 <div class="h-screen overflow-hidden">
   <p-menubar [model]="toolbarItems">
     <p-button label="Home" icon="pi pi-home" routerLink="/dash/overview" outlined></p-button>
   </p-menubar>
   <div class="grid grid-nogutter h-full">
-    <div class="xl:col-10 col-12 surface-100 max-h-full px-8 pt-4 overflow-y-auto">
-      <div [innerHTML]="contentService.renderedHtml()" class="mb-8"></div>
-    </div>
     <div class="xl:col-2 col-12 bg-white max-h-full overflow-auto">
       <p-tabView>
         <p-tabPanel header="Elements">
           <div class="flex flex-column align-items-stretch justify-content-start gap-3">
             @for (element of contentService.elements(); track element.id) {
-              <p-button
-                [classList]="[(contentService.selectedElement()?.handle == element.handle) ? 'element-button-selected' : 'element-button']"
-                (click)="contentService.selectElement(element)" [pTooltip]="element.id"
-                [label]="element.handle"></p-button>
+              <div class="flex flex-row gap-2 justify-content-evenly">
+                <p-button severity="danger" outlined icon="pi pi-trash" [pTooltip]="'Delete Element'"
+                          (click)="contentService.deleteElement(element.id)"></p-button>
+                <p-button
+                  [classList]="[(contentService.selectedElement()?.handle == element.handle) ? 'element-button-selected flex-1' : 'element-button flex-1']"
+                  (click)="contentService.selectElement(element)" [pTooltip]="element.id"
+                  [label]="element.handle"></p-button>
+              </div>
             }
           </div>
         </p-tabPanel>
@@ -39,18 +41,41 @@
           <div class="flex flex-column align-items-stretch justify-content-start gap-5">
             <div></div>
             @for (entry of contentService.selectedElementMetadata(); track entry.id) {
-              <p-floatLabel>
-                @if (this.constraintsOf(entry.key).length > 0) {
-                  <p-dropdown id="{{entry.key}}" styleClass="w-full" [options]="this.constraintsOf(entry.key)"></p-dropdown>
-                } @else {
-                  <input pInputText id="{{entry.key}}" class="w-full" value="{{entry.value}}"/>
-                }
-                <label for="{{entry.key}}">{{ entry.key }}</label>
-              </p-floatLabel>
+              @if (this.constraintsOf(entry.key).length > 0) {
+                <p-floatLabel>
+                  <p-dropdown #dropdown id="{{entry.key}}" styleClass="w-full"
+                              [ngModel]="entry.value"
+                              (onChange)="commitMetaChange(contentService.selectedElement()!.id, entry.key, dropdown.value)"
+                              [options]="this.constraintsOf(entry.key)"></p-dropdown>
+                  <label for="{{entry.key}}">{{ entry.key }}</label>
+                </p-floatLabel>
+              } @else {
+                <form (submit)="commitMetaChange(contentService.selectedElement()!.id, entry.key, newValue.value)">
+                  <div class="flex flex-row justify-content-evenly gap-3">
+                    <p-floatLabel class="flex-1">
+                      <input #newValue pInputText id="{{entry.key}}" class="w-full" value="{{entry.value}}"/>
+                      <label for="{{entry.key}}">{{ entry.key }}</label>
+                    </p-floatLabel>
+                    <p-button severity="primary" icon="pi pi-send" [pTooltip]="'Commit New Value'" type="submit"
+                              outlined></p-button>
+                  </div>
+                </form>
+              }
             }
           </div>
         </p-tabPanel>
       </p-tabView>
+    </div>
+    <div class="xl:col-10 col-12 surface-100 max-h-full px-8 pt-4 overflow-y-auto">
+      <div *ngIf="!contentService.rendererRunning()">
+        <div [innerHTML]="contentService.renderedHtml()"></div>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      </div>
+      <div class="flex flex-column justify-content-center align-items-center w-full h-full"
+           *ngIf="contentService.rendererRunning()">
+        <p-progressSpinner></p-progressSpinner>
+        <h2>Rendering ...</h2>
+      </div>
     </div>
   </div>
 </div>

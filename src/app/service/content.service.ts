@@ -19,6 +19,8 @@ export class ContentService {
 
   public selectedElementMetadata: WritableSignal<MetadataEntry[]> = signal([])
 
+  public selectedArticle: WritableSignal<string | undefined> = signal(undefined)
+
   constructor(private tangentialContent: TangentialContentService, private feedbackService: FeedbackService) {
   }
 
@@ -39,7 +41,23 @@ export class ContentService {
 
   selectElement(element: ElementResponse) {
     this.selectedElement.set(element)
+    this.highlightSelectedElement()
     this.loadMetadataOfSelectedElement()
+  }
+
+  highlightSelectedElement() {
+    let element = this.selectedElement()
+    if (!element)
+      return
+    let domElements = document.getElementsByClassName(`tan-${element.handle}`)
+    if (domElements.length != 1)
+      return
+    let domElement = domElements[0]
+    domElement.classList.remove("editor-tan-highlight")
+    domElement.classList.add("editor-tan-highlight")
+    setTimeout(() => {
+      domElement.classList.remove("editor-tan-highlight")
+    }, 500)
   }
 
   deleteArticle(article: ArticleResponse, then: () => void = () => {
@@ -72,11 +90,15 @@ export class ContentService {
     })
   }
 
-  loadElements(id: string) {
+  loadElements() {
+    if (!this.selectedArticle())
+      return
+
     this.elementsLoading.set(true)
-    this.tangentialContent.getArticleElements(id).subscribe({
+    this.tangentialContent.getArticleElements(this.selectedArticle()!).subscribe({
       next: elements => {
         this.elements.set(elements)
+        this.loadMetadataOfSelectedElement()
         this.elementsLoading.set(false)
       },
       error: err => {
@@ -86,9 +108,12 @@ export class ContentService {
     })
   }
 
-  render(id: string) {
+  render() {
+    if (!this.selectedArticle())
+      return
+
     this.rendererRunning.set(true)
-    this.tangentialContent.renderArticle(id).subscribe({
+    this.tangentialContent.renderArticle(this.selectedArticle()!).subscribe({
       next: html => {
         this.renderedHtml.set(html)
         this.rendererRunning.set(false)
@@ -100,16 +125,19 @@ export class ContentService {
     })
   }
 
-  createElement(articleId: string, handle: string, type: string) {
+  createElement(handle: string, type: string) {
+    if (!this.selectedArticle())
+      return
+
     this.tangentialContent.insertElement({
-      article: articleId,
+      article: this.selectedArticle()!,
       after: this.elements()[this.elements().length - 1].id,
       handle: handle,
       type: type
     }).subscribe({
       next: resp => {
-        this.loadElements(articleId)
-        this.render(articleId)
+        this.loadElements()
+        this.render()
       },
       error: err => {
         this.feedbackService.catalystError(err)
@@ -118,12 +146,62 @@ export class ContentService {
   }
 
   loadMetadataOfSelectedElement() {
-    if (this.selectedElement() == undefined)
+    if (!this.selectedElement())
       return
 
     this.tangentialContent.getMetadata(this.selectedElement()!.id).subscribe({
       next: listing => {
         this.selectedElementMetadata.set(listing)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
+  changeElementType(id: string, newType: string) {
+    this.tangentialContent.alterElement({
+      id: id,
+      type: newType
+    }).subscribe({
+      next: resp => {
+        this.loadElements()
+        this.loadMetadataOfSelectedElement()
+        this.render()
+        this.feedbackService.ok("Type changed", `Changed element type to ${newType}`)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
+  putMeta(id: string, key: string, value: string) {
+    this.tangentialContent.putMetadata(id, {
+      key, value
+    }).subscribe({
+      next: resp => {
+        this.loadElements()
+        this.loadMetadataOfSelectedElement()
+        this.render()
+        this.feedbackService.ok("Success!", `Meta entry ${key} changed!`)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
+  deleteElement(id: string) {
+    this.tangentialContent.deleteElement({
+      id
+    }).subscribe({
+      next: resp => {
+        if (id == this.selectedElement()?.id)
+          this.selectedElement.set(undefined)
+        this.loadElements()
+        this.render()
+        this.feedbackService.ok("Element removed", "Successfully removed element")
       },
       error: err => {
         this.feedbackService.catalystError(err)

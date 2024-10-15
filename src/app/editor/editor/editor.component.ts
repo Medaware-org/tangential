@@ -7,7 +7,7 @@ import {SplitButtonModule} from "primeng/splitbutton";
 import {SplitterModule} from "primeng/splitter";
 import {TabViewModule} from "primeng/tabview";
 import {Ripple} from "primeng/ripple";
-import {MenuItem} from "primeng/api";
+import {ConfirmationService, MenuItem} from "primeng/api";
 import {MenubarModule} from "primeng/menubar";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
@@ -16,7 +16,9 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {ElementTypeRequirement, TangentialAuxiliaryService} from "../../openapi";
 import {FeedbackService} from "../../service/feedback.service";
 import {FloatLabelModule} from "primeng/floatlabel";
-import {TitleCasePipe} from "@angular/common";
+import {NgIf, TitleCasePipe} from "@angular/common";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @Component({
   selector: 'app-editor',
@@ -34,14 +36,17 @@ import {TitleCasePipe} from "@angular/common";
     PaginatorModule,
     ReactiveFormsModule,
     FloatLabelModule,
-    TitleCasePipe
+    TitleCasePipe,
+    ConfirmDialogModule,
+    NgIf,
+    ProgressSpinnerModule
   ],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss'
 })
 export class EditorComponent implements AfterViewInit {
 
-  @Input() id!: string
+  @Input() private id!: string
 
   toolbarItems: MenuItem[] = [
     {
@@ -77,14 +82,15 @@ export class EditorComponent implements AfterViewInit {
 
   protected valueConstraints: WritableSignal<Map<string, string[]>> = signal(new Map<string, string[]>())
 
-  constructor(protected contentService: ContentService, protected auxService: TangentialAuxiliaryService, private feedbackService: FeedbackService, private router: Router) {
+  constructor(protected contentService: ContentService, protected auxService: TangentialAuxiliaryService, private feedbackService: FeedbackService, private router: Router, private confirmationService: ConfirmationService) {
   }
 
   ngAfterViewInit(): void {
+    this.contentService.selectedArticle.set(this.id)
     this.loadValueConstraints()
     this.loadElementTypes()
     this.loadElements()
-    this.contentService.render(this.id)
+    this.contentService.render()
   }
 
   loadElementTypes() {
@@ -100,7 +106,7 @@ export class EditorComponent implements AfterViewInit {
   }
 
   loadElements() {
-    this.contentService.loadElements(this.id)
+    this.contentService.loadElements()
   }
 
   openNewElementDialog(type: string = "BLANK_PLACEHOLDER") {
@@ -117,7 +123,7 @@ export class EditorComponent implements AfterViewInit {
     if (this.newElementFormGroup.invalid)
       return
 
-    this.contentService.createElement(this.id, this.newElementFormGroup.get('handle')?.value!, this.newElementFormGroup.get('elementType')?.value!.type!)
+    this.contentService.createElement(this.newElementFormGroup.get('handle')?.value!, this.newElementFormGroup.get('elementType')?.value!.type!)
   }
 
   loadValueConstraints() {
@@ -137,6 +143,25 @@ export class EditorComponent implements AfterViewInit {
 
   constraintsOf(metaEntry: string): string[] {
     return this.valueConstraints().get(metaEntry) || []
+  }
+
+  commitMetaChange(elementId: string, key: string, newValue: string) {
+    if (key == "ELEMENT_TYPE") {
+      this.commitTypeChange(elementId, newValue)
+      return
+    }
+
+    this.contentService.putMeta(elementId, key, newValue)
+  }
+
+  private commitTypeChange(id: string, newType: string) {
+    this.confirmationService.confirm({
+      header: `Commit type change?`,
+      message: `Are you sure that you want to change the type of this element? This is irreversible, and will overwrite some existing meta fields.`,
+      accept: () => {
+        this.contentService.changeElementType(id, newType)
+      }
+    })
   }
 
 }

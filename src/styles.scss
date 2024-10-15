@@ -6,17 +6,6 @@
 
 @import url("http://localhost:8080/avis/css");
 
-@font-face {
-  font-family: Lato;
-  font-weight: 400;
-  font-style: normal;
-  src: url("/fonts/Lato-Regular.ttf") format('truetype');
-}
-
-* {
-  font-family: Lato, sans-serif;
-}
-
 .bg-1b {
   background-color: #1b1b1b;
 }
@@ -28,4 +17,31 @@
 
 html {
   max-height: 100vh;
+}
+
+.editor-tan-highlight {
+  animation-name: editor-highlight-pulse;
+  animation-duration: .5s;
+}
+
+.editor-tan-highlight > img {
+  animation-name: editor-tactile-pulse;
+  animation-duration: .5s;
+}
+
+@keyframes editor-highlight-pulse {
+  0%, 100% {
+  }
+  50% {
+    background-color: var(--primary-100);
+  }
+}
+
+@keyframes editor-tactile-pulse {
+  0%, 50%, 100% {
+    border: 20px solid white;
+  }
+  25%, 75% {
+    border: 20px solid var(--primary-color);
+  }
 }
