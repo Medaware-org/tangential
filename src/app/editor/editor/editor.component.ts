@@ -76,7 +76,13 @@ export class EditorComponent implements AfterViewInit {
     elementType: new FormControl<ElementTypeRequirement | undefined>(undefined, [Validators.required])
   })
 
+  protected editTitleFormGroup = new FormGroup({
+    title: new FormControl('', [Validators.required])
+  })
+
   protected newElementDialogVisible = signal(false)
+
+  protected editTitleDialogVisible = signal(false)
 
   protected elementTypes: WritableSignal<ElementTypeRequirement[]> = signal([])
 
@@ -86,11 +92,12 @@ export class EditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.contentService.selectedArticle.set(this.id)
-    this.loadValueConstraints()
-    this.loadElementTypes()
-    this.loadElements()
-    this.contentService.render()
+    this.contentService.selectArticleInitRef(this.id, () => {
+      this.loadValueConstraints()
+      this.loadElementTypes()
+      this.loadElements()
+      this.contentService.render()
+    })
   }
 
   loadElementTypes() {
@@ -161,6 +168,20 @@ export class EditorComponent implements AfterViewInit {
       accept: () => {
         this.contentService.changeElementType(id, newType)
       }
+    })
+  }
+
+  initTitleEdit() {
+    this.editTitleFormGroup.reset({
+      title: this.contentService.selectedArticleRef()?.title!
+    })
+    this.editTitleDialogVisible.set(true)
+  }
+
+  renameArticle() {
+    this.editTitleDialogVisible.set(false)
+    this.contentService.renameArticle(this.editTitleFormGroup.get('title')!.value!, () => {
+      this.contentService.reloadArticleData()
     })
   }
 

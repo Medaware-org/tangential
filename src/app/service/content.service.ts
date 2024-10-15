@@ -20,16 +20,38 @@ export class ContentService {
   public selectedElementMetadata: WritableSignal<MetadataEntry[]> = signal([])
 
   public selectedArticle: WritableSignal<string | undefined> = signal(undefined)
+  public selectedArticleRef: WritableSignal<ArticleResponse | undefined> = signal(undefined)
 
   constructor(private tangentialContent: TangentialContentService, private feedbackService: FeedbackService) {
   }
 
-  loadArticles(onlyOwn: boolean) {
+  selectArticleInitRef(id: string, then: () => void = () => {
+  }) {
+    this.loadArticles(false, () => {
+      this.selectedArticleRef.set(this.articles().find((it) => it.id == id))
+      this.selectedArticle.set(id)
+      then()
+    })
+  }
+
+  reloadArticleData() {
+    if (!this.selectedArticle())
+      return
+
+    this.loadArticles(false, () => {
+      this.selectedArticleRef.set(this.articles().find((it) => it.id == this.selectedArticle()))
+      this.selectedArticle.set(this.selectedArticle())
+    })
+  }
+
+  loadArticles(onlyOwn: boolean, then: () => void = () => {
+  }) {
     this.articlesLoading.set(true)
     this.articles.set([])
     this.tangentialContent.listArticles(onlyOwn ? "current" : "all").subscribe({
       next: articles => {
         this.articles.set(articles)
+        then()
         this.articlesLoading.set(false)
       },
       error: err => {
@@ -202,6 +224,26 @@ export class ContentService {
         this.loadElements()
         this.render()
         this.feedbackService.ok("Element removed", "Successfully removed element")
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
+  renameArticle(newTitle: string, then: () => void = () => {}) {
+    if (!this.selectedArticle())
+      return
+
+    this.tangentialContent.renameArticle({
+      id: this.selectedArticle()!,
+      title: newTitle
+    }).subscribe({
+      next: resp => {
+        then()
+        this.loadElements()
+        this.render()
+        this.feedbackService.ok("Article renamed", `The article was successfully renamed to "${newTitle}"`)
       },
       error: err => {
         this.feedbackService.catalystError(err)

@@ -12,5 +12,6 @@ export * from './elementTypeRequirement';
 export * from './getMetaEntryValueConstraints200ResponseInner';
 export * from './metadataCreateRequest';
 export * from './metadataEntry';
+export * from './renameArticleRequest';
 export * from './tangentialLoginRequest';
 export * from './tangentialSessionResponse';

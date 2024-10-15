@@ -28,6 +28,7 @@ model/getMetaEntryValueConstraints200ResponseInner.ts
 model/metadataCreateRequest.ts
 model/metadataEntry.ts
 model/models.ts
+model/renameArticleRequest.ts
 model/tangentialLoginRequest.ts
 model/tangentialSessionResponse.ts
 param.ts
