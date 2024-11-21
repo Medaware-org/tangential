@@ -52,7 +52,10 @@
       <td>{{ article.author }}</td>
       <td>{{ article.title }}</td>
       <td>
-        <div class="text-center border-round-3xl p-1 px-2 inline-block" [ngStyle]="{'background-color': '#' + article.topic.color}">{{ article.topic.name }}</div>
+        <div class="text-center border-round-3xl p-1 px-2 inline-block"
+             [ngStyle]="{'background-color': '#' + article.topic.color}"
+             [pTooltip]="article.topic.description">{{ article.topic.name }}
+        </div>
       </td>
       <td>{{ article.date }}</td>
       <th>

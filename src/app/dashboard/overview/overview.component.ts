@@ -13,6 +13,7 @@ import {ArticleResponse} from "../../openapi";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {Router} from "@angular/router";
 import {NgStyle} from "@angular/common";
+import {DockModule} from "primeng/dock";
 
 @Component({
   selector: 'app-overview',
@@ -29,7 +30,8 @@ import {NgStyle} from "@angular/common";
     ConfirmDialogModule,
     ReactiveFormsModule,
     FloatLabelModule,
-    NgStyle
+    NgStyle,
+    DockModule
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
