@@ -7,6 +7,7 @@ import {ProfileComponent} from "./dashboard/profile/profile.component";
 import {MaintenanceComponent} from "./dashboard/maintenance/maintenance.component";
 import {AnalyticsComponent} from "./dashboard/analytics/analytics.component";
 import {EditorComponent} from "./editor/editor/editor.component";
+import {TopicsComponent} from "./dashboard/topics/topics.component";
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
       {
         path: "overview",
         component: OverviewComponent
+      },
+      {
+        path: "topics",
+        component: TopicsComponent
       },
       {
         path: "profile",

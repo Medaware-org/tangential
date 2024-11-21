@@ -1,5 +1,12 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {ArticleResponse, ElementResponse, MetadataEntry, TangentialContentService} from "../openapi";
+import {
+  ArticleResponse,
+  ElementResponse,
+  MetadataEntry,
+  TangentialContentService,
+  TopicResponse,
+  TopicsService
+} from "../openapi";
 import {FeedbackService} from "./feedback.service";
 
 @Injectable({
@@ -22,7 +29,10 @@ export class ContentService {
   public selectedArticle: WritableSignal<string | undefined> = signal(undefined)
   public selectedArticleRef: WritableSignal<ArticleResponse | undefined> = signal(undefined)
 
-  constructor(private tangentialContent: TangentialContentService, private feedbackService: FeedbackService) {
+  public topics: WritableSignal<TopicResponse[]> = signal([])
+  public topicsLoading: WritableSignal<boolean> = signal(false)
+
+  constructor(private tangentialContent: TangentialContentService, private feedbackService: FeedbackService, private topicService: TopicsService) {
   }
 
   selectArticleInitRef(id: string, then: () => void = () => {
@@ -57,6 +67,19 @@ export class ContentService {
       error: err => {
         this.feedbackService.catalystError(err)
         this.articlesLoading.set(false)
+      }
+    })
+  }
+
+  loadTopics() {
+    this.topicsLoading.set(false)
+    this.topicService.getAllTopics().subscribe({
+      next: articles => {
+        this.topics.set(articles)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+        this.topicsLoading.set(false)
       }
     })
   }
@@ -231,11 +254,12 @@ export class ContentService {
     })
   }
 
-  renameArticle(newTitle: string, then: () => void = () => {}) {
+  renameArticle(newTitle: string, then: () => void = () => {
+  }) {
     if (!this.selectedArticle())
       return
 
-    this.tangentialContent.renameArticle({
+    this.tangentialContent.updateArticle({
       id: this.selectedArticle()!,
       title: newTitle
     }).subscribe({

@@ -1,0 +1,45 @@
+<div class="flex flex-row justify-content-between align-items-center w-full">
+  <div class="flex flex-row justify-content-center align-items-center gap-4">
+    <h1>Topics</h1>
+    <p-button severity="success" icon="pi pi-plus" outlined></p-button>
+  </div>
+</div>
+<div class="mt-3"></div>
+<p-table [value]="contentService.topics()" [loading]="contentService.topicsLoading()"
+         styleClass="p-datatable-striped">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>UUID</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Editable</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-topic>
+    <tr>
+      <td>{{ topic.id }}</td>
+      <td>
+        <div class="text-center border-round-3xl p-1 px-2 inline-block"
+             [ngStyle]="{'background-color': '#' + topic.color}">{{ topic.name }}
+        </div>
+      </td>
+      <td>{{ topic.description }}</td>
+      <td>
+        @if (topic.editable) {
+          <i class="pi pi-check text-green-700"></i>
+        } @else {
+          <i class="pi pi-times text-red-700"></i>
+        }
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between mt-1">
+      @if (contentService.topics().length == 0) {
+        No topics found.
+      } @else {
+        Loaded {{ contentService.topics().length }} {{ contentService.topics().length == 1 ? "topic" : "topics" }}
+      }
+    </div>
+  </ng-template>
+</p-table>
