@@ -1,4 +1,4 @@
-<p-dialog header="Create a New Article" [modal]="true" [draggable]="false" [(visible)]="creationDialogVisible"
+<p-dialog header="Create a New Article" [modal]="true" [draggable]="true" [(visible)]="creationDialogVisible"
           [style]="{ width: '20%' }">
   <form [formGroup]="creationForm" (ngSubmit)="createArticle()">
     <div class="flex flex-column justify-content-center gap-4">

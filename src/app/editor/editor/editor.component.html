@@ -1,4 +1,4 @@
-<p-dialog header="Create a New Element" [modal]="true" [draggable]="false" [(visible)]="newElementDialogVisible"
+<p-dialog header="Create a New Element" [modal]="true" [draggable]="true" [(visible)]="newElementDialogVisible"
           [style]="{ width: '20%' }">
   <form [formGroup]="newElementFormGroup" (submit)="createNewElement()">
     <div class="flex flex-column justify-content-evenly gap-4 mt-4">
@@ -15,7 +15,7 @@
     </div>
   </form>
 </p-dialog>
-<p-dialog header="Edit Title" [modal]="true" [draggable]="false" [(visible)]="editTitleDialogVisible"
+<p-dialog header="Edit Title" [modal]="true" [draggable]="true" [(visible)]="editTitleDialogVisible"
           [style]="{ width: '20%' }">
   <form [formGroup]="editTitleFormGroup" (submit)="renameArticle()">
     <div class="flex flex-column justify-content-evenly gap-4 mt-4">
