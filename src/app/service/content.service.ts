@@ -84,6 +84,22 @@ export class ContentService {
     })
   }
 
+  createTopic(name: string, description: string, color: string) {
+    this.topicService.createNewTopic({
+      name: name,
+      description: description,
+      color: color
+    }).subscribe({
+      next: a => {
+        this.loadTopics()
+        this.feedbackService.ok("Topic Created", `Successfully created topic \"${name}\"`)
+      },
+      error: err => {
+        this.feedbackService.catalystError(err)
+      }
+    })
+  }
+
   selectElement(element: ElementResponse) {
     this.selectedElement.set(element)
     this.highlightSelectedElement()
