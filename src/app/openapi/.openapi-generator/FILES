@@ -30,11 +30,11 @@ model/getMetaEntryValueConstraints200ResponseInner.ts
 model/metadataCreateRequest.ts
 model/metadataEntry.ts
 model/models.ts
-model/renameArticleRequest.ts
 model/tangentialLoginRequest.ts
 model/tangentialSessionResponse.ts
 model/topicCreationRequest.ts
 model/topicResponse.ts
+model/updateArticleRequest.ts
 model/updateTopicRequest.ts
 param.ts
 variables.ts
