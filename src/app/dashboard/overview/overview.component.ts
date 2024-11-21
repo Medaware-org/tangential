@@ -12,6 +12,7 @@ import {ConfirmationService} from "primeng/api";
 import {ArticleResponse} from "../../openapi";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {Router} from "@angular/router";
+import {NgStyle} from "@angular/common";
 
 @Component({
   selector: 'app-overview',
@@ -27,7 +28,8 @@ import {Router} from "@angular/router";
     InputTextModule,
     ConfirmDialogModule,
     ReactiveFormsModule,
-    FloatLabelModule
+    FloatLabelModule,
+    NgStyle
   ],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
