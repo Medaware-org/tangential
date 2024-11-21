@@ -9,6 +9,7 @@ api/status.service.ts
 api/tangentialAuth.service.ts
 api/tangentialAuxiliary.service.ts
 api/tangentialContent.service.ts
+api/topics.service.ts
 configuration.ts
 encoder.ts
 git_push.sh
@@ -21,6 +22,7 @@ model/basicMaintainerResponse.ts
 model/catalystError.ts
 model/deleteArticleRequest.ts
 model/deleteElementRequest.ts
+model/deleteTopicRequest.ts
 model/elementInsertRequest.ts
 model/elementResponse.ts
 model/elementTypeRequirement.ts
@@ -31,5 +33,8 @@ model/models.ts
 model/renameArticleRequest.ts
 model/tangentialLoginRequest.ts
 model/tangentialSessionResponse.ts
+model/topicCreationRequest.ts
+model/topicResponse.ts
+model/updateTopicRequest.ts
 param.ts
 variables.ts

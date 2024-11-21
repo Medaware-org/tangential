@@ -12,4 +12,6 @@ export * from './tangentialAuxiliary.service';
 import { TangentialAuxiliaryService } from './tangentialAuxiliary.service';
 export * from './tangentialContent.service';
 import { TangentialContentService } from './tangentialContent.service';
-export const APIS = [AVISService, AnterogradiaService, ResourcesService, StatusService, TangentialAuthService, TangentialAuxiliaryService, TangentialContentService];
+export * from './topics.service';
+import { TopicsService } from './topics.service';
+export const APIS = [AVISService, AnterogradiaService, ResourcesService, StatusService, TangentialAuthService, TangentialAuxiliaryService, TangentialContentService, TopicsService];
