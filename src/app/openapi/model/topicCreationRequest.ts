@@ -13,5 +13,6 @@
 export interface TopicCreationRequest { 
     name: string;
     description: string;
+    color: string;
 }
 
