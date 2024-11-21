@@ -16,5 +16,6 @@ export interface TopicResponse {
     description: string;
     color: string;
     editable: boolean;
+    text_color: string;
 }
 
