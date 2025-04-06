@@ -13,6 +13,7 @@ export * from './elementTypeRequirement';
 export * from './getMetaEntryValueConstraints200ResponseInner';
 export * from './metadataCreateRequest';
 export * from './metadataEntry';
+export * from './queryResponse';
 export * from './tangentialLoginRequest';
 export * from './tangentialSessionResponse';
 export * from './topicCreationRequest';

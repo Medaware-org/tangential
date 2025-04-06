@@ -74,8 +74,9 @@ export class ContentService {
   loadTopics() {
     this.topicsLoading.set(false)
     this.topicService.getAllTopics().subscribe({
-      next: articles => {
-        this.topics.set(articles)
+      next: topics => {
+        this.topics.set(topics)
+        console.log(topics)
       },
       error: err => {
         this.feedbackService.catalystError(err)

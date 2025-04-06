@@ -10,12 +10,9 @@
  */
 
 
-export interface TopicResponse { 
+export interface QueryResponse { 
     id: string;
-    name: string;
-    description: string;
-    color: string;
-    editable: boolean;
-    textColor: string;
+    title: string;
+    author: string;
 }
 

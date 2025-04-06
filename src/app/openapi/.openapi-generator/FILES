@@ -4,6 +4,7 @@ api.module.ts
 api/aVIS.service.ts
 api/anterogradia.service.ts
 api/api.ts
+api/public.service.ts
 api/resources.service.ts
 api/status.service.ts
 api/tangentialAuth.service.ts
@@ -30,6 +31,7 @@ model/getMetaEntryValueConstraints200ResponseInner.ts
 model/metadataCreateRequest.ts
 model/metadataEntry.ts
 model/models.ts
+model/queryResponse.ts
 model/tangentialLoginRequest.ts
 model/tangentialSessionResponse.ts
 model/topicCreationRequest.ts

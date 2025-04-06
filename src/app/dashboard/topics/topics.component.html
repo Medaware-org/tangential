@@ -18,7 +18,7 @@
       <div class="field grid">
         <label class="col-3" for="color">Color</label>
         <div class="col-9">
-<!--          This color picker behaves weird. This behavior is documented (e.g. https://github.com/primefaces/primeng/issues/16586)-->
+          <!--          This color picker behaves weird. This behavior is documented (e.g. https://github.com/primefaces/primeng/issues/16586)-->
           <p-colorPicker id="color" format="hex" formControlName="color"/>
         </div>
       </div>
@@ -51,7 +51,9 @@
       <td>{{ topic.id }}</td>
       <td>
         <div class="text-center border-round-3xl p-1 px-2 inline-block"
-             [ngStyle]="{'background-color': '#' + topic.color}">{{ topic.name }}
+             [style.background-color]="'#' + topic.color"
+             [style.color]="'#' + topic.textColor">
+          {{ topic.name }}
         </div>
       </td>
       <td>{{ topic.description }}</td>
