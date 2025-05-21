@@ -10,13 +10,7 @@
  */
 
 
-export interface TopicResponse { 
-    id: string;
-    name: string;
-    description: string;
-    color: string;
-    editable: boolean;
-    textColor: string;
-    isFallback: boolean;
+export interface RequestOCR200Response { 
+    data?: Array<string>;
 }
 

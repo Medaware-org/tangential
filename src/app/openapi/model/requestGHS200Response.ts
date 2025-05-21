@@ -8,15 +8,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { RequestGHS200ResponseScoresInner } from './requestGHS200ResponseScoresInner';
 
 
-export interface TopicResponse { 
-    id: string;
-    name: string;
-    description: string;
-    color: string;
-    editable: boolean;
-    textColor: string;
-    isFallback: boolean;
+export interface RequestGHS200Response { 
+    output: string;
+    scores: Array<RequestGHS200ResponseScoresInner>;
 }
 

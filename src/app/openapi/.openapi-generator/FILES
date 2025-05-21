@@ -31,7 +31,9 @@ model/getMetaEntryValueConstraints200ResponseInner.ts
 model/metadataCreateRequest.ts
 model/metadataEntry.ts
 model/models.ts
-model/queryResponse.ts
+model/requestGHS200Response.ts
+model/requestGHS200ResponseScoresInner.ts
+model/requestOCR200Response.ts
 model/tangentialLoginRequest.ts
 model/tangentialSessionResponse.ts
 model/topicCreationRequest.ts

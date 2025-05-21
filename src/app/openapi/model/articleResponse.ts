@@ -8,7 +8,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TopicResponse } from './topicResponse';
 
 
 export interface ArticleResponse { 
@@ -16,6 +15,5 @@ export interface ArticleResponse {
     title: string;
     date: string;
     id?: string;
-    topic: TopicResponse;
 }
 

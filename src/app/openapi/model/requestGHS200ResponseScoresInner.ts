@@ -10,13 +10,8 @@
  */
 
 
-export interface TopicResponse { 
-    id: string;
-    name: string;
-    description: string;
-    color: string;
-    editable: boolean;
-    textColor: string;
-    isFallback: boolean;
+export interface RequestGHS200ResponseScoresInner { 
+    _class: string;
+    score: number;
 }
 

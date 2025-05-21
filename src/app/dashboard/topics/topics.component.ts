@@ -45,6 +45,14 @@ export class TopicsComponent {
     color: new FormControl('#a29bfe', [Validators.required])
   })
 
+  protected topicEditDialogVisible = false
+  protected topicEditForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    color: new FormControl('#a29bfe', [Validators.required])
+  })
+  protected topicEditId: string = ""
+
   constructor(protected contentService: ContentService, protected confirmationService: ConfirmationService, protected topicService: TopicsService) {
     this.reloadTopics()
   }
@@ -79,4 +87,29 @@ export class TopicsComponent {
     })
   }
 
+  submitTopicEdit() {
+    this.topicService.updateTopic({
+      id: this.topicEditId,
+      name: this.topicEditForm.get('name')?.value!!,
+      description: this.topicEditForm.get('description')?.value!!,
+      color: this.topicEditForm.get('color')?.value!!,
+    }).subscribe({
+      next: () => {
+        this.reloadTopics()
+        this.topicEditDialogVisible = false
+      }
+    })
+  }
+
+  initTopicEdit(topic: TopicResponse) {
+    this.topicEditId = topic.id
+    this.topicEditForm.setValue({
+      name: topic.name,
+      description: topic.description,
+      color: topic.color
+    })
+    this.topicEditDialogVisible = true
+  }
+
+  protected readonly top = top;
 }
