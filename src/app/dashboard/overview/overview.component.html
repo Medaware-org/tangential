@@ -41,7 +41,6 @@
       <th>UUID</th>
       <th>Author</th>
       <th>Title</th>
-      <th>Topic</th>
       <th>Date</th>
       <th>Actions</th>
     </tr>
@@ -51,12 +50,6 @@
       <td>{{ article.id }}</td>
       <td>{{ article.author }}</td>
       <td>{{ article.title }}</td>
-      <td>
-        <div class="text-center border-round-3xl p-1 px-2 inline-block"
-             [ngStyle]="{'background-color': '#' + article.topic.color, 'color': '#' + article.topic.text_color}"
-             [pTooltip]="article.topic.description">{{ article.topic.name }}
-        </div>
-      </td>
       <td>{{ article.date }}</td>
       <th>
         <div class="flex justify-content-start gap-2">

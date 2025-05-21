@@ -4,7 +4,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule} from "primeng/paginator";
-import {PrimeTemplate} from "primeng/api";
+import {ConfirmationService, PrimeTemplate} from "primeng/api";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {TableModule} from "primeng/table";
@@ -12,6 +12,8 @@ import {ContentService} from "../../service/content.service";
 import {NgStyle} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {ColorPickerModule} from "primeng/colorpicker";
+import {TooltipModule} from "primeng/tooltip";
+import {TopicResponse, TopicsService} from "../../openapi";
 
 @Component({
   selector: 'app-topics',
@@ -28,7 +30,8 @@ import {ColorPickerModule} from "primeng/colorpicker";
     TableModule,
     NgStyle,
     CalendarModule,
-    ColorPickerModule
+    ColorPickerModule,
+    TooltipModule
   ],
   templateUrl: './topics.component.html',
   styleUrl: './topics.component.scss'
@@ -42,7 +45,7 @@ export class TopicsComponent {
     color: new FormControl('#a29bfe', [Validators.required])
   })
 
-  constructor(protected contentService: ContentService) {
+  constructor(protected contentService: ContentService, protected confirmationService: ConfirmationService, protected topicService: TopicsService) {
     this.reloadTopics()
   }
 
@@ -59,4 +62,21 @@ export class TopicsComponent {
     this.topicCreationDialogVisible = false
     this.contentService.createTopic(this.topicCreationForm.get('name')?.value!!, this.topicCreationForm.get('description')?.value!!, this.topicCreationForm.get('color')?.value!!)
   }
+
+  deleteTopic(topic: TopicResponse) {
+    this.confirmationService.confirm({
+      header: `Delete Topic?`,
+      message: `Are you sure that you want to delete topic "${topic.name}" ?`,
+      accept: () => {
+        this.topicService.deleteTopic({
+          id: topic.id
+        }).subscribe({
+          next: () => {
+            this.reloadTopics()
+          }
+        })
+      }
+    })
+  }
+
 }

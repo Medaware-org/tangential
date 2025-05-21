@@ -1,3 +1,4 @@
+<p-confirmDialog/>
 <p-dialog header="Create a New Topic" [modal]="true" [draggable]="false" [(visible)]="topicCreationDialogVisible"
           [breakpoints]="{ '1199px': '75vw', '575px': '95vw' }" [style]="{'min-width': '45vw'}"
           [contentStyle]="{'overflow':'visible'}">
@@ -44,6 +45,7 @@
       <th>Title</th>
       <th>Description</th>
       <th>Editable</th>
+      <th>Actions</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-topic>
@@ -63,6 +65,10 @@
         } @else {
           <i class="pi pi-times text-red-700"></i>
         }
+      </td>
+      <td>
+        <p-button severity="danger" outlined icon="pi pi-trash" [pTooltip]="'Delete Topic'"
+                  (click)="deleteTopic(topic)"></p-button>
       </td>
     </tr>
   </ng-template>
