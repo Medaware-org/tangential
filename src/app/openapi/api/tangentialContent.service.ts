@@ -671,15 +671,22 @@ export class TangentialContentService {
     /**
      * Get a list of articles written by the specified selector
      * @param selector Specifies the users whose articles should be listed; User ID for a specified user, \&#39;current\&#39; for the currently logged-in user, or \&#39;all\&#39; for no filtering
+     * @param query Search query
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listArticles(selector: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ArticleResponse>>;
-    public listArticles(selector: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ArticleResponse>>>;
-    public listArticles(selector: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ArticleResponse>>>;
-    public listArticles(selector: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listArticles(selector: string, query?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<ArticleResponse>>;
+    public listArticles(selector: string, query?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<ArticleResponse>>>;
+    public listArticles(selector: string, query?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<ArticleResponse>>>;
+    public listArticles(selector: string, query?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (selector === null || selector === undefined) {
             throw new Error('Required parameter selector was null or undefined when calling listArticles.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (query !== undefined && query !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>query, 'query');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -722,6 +729,7 @@ export class TangentialContentService {
         return this.httpClient.request<Array<ArticleResponse>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

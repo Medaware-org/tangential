@@ -15,5 +15,6 @@ export interface ArticleResponse {
     title: string;
     date: string;
     id?: string;
+    authorId: string;
 }
 

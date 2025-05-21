@@ -37,7 +37,7 @@ export class ContentService {
 
   selectArticleInitRef(id: string, then: () => void = () => {
   }) {
-    this.loadArticles(false, () => {
+    this.loadArticles(false, "", () => {
       this.selectedArticleRef.set(this.articles().find((it) => it.id == id))
       this.selectedArticle.set(id)
       then()
@@ -48,17 +48,18 @@ export class ContentService {
     if (!this.selectedArticle())
       return
 
-    this.loadArticles(false, () => {
+    this.loadArticles(false, "", () => {
       this.selectedArticleRef.set(this.articles().find((it) => it.id == this.selectedArticle()))
       this.selectedArticle.set(this.selectedArticle())
     })
   }
 
-  loadArticles(onlyOwn: boolean, then: () => void = () => {
-  }) {
-    this.articlesLoading.set(true)
-    this.articles.set([])
-    this.tangentialContent.listArticles(onlyOwn ? "current" : "all").subscribe({
+  loadArticles(onlyOwn: boolean, query: string, then: () => void = () => {
+  }, setLoadingState: boolean = false) {
+    if (setLoadingState)
+      this.articlesLoading.set(true)
+    // this.articles.set([])
+    this.tangentialContent.listArticles(onlyOwn ? "current" : "all", query.trim()).subscribe({
       next: articles => {
         this.articles.set(articles)
         then()

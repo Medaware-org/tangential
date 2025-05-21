@@ -12,7 +12,6 @@ import {ConfirmationService} from "primeng/api";
 import {ArticleResponse} from "../../openapi";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {Router} from "@angular/router";
-import {NgStyle} from "@angular/common";
 import {DockModule} from "primeng/dock";
 
 @Component({
@@ -30,7 +29,6 @@ import {DockModule} from "primeng/dock";
     ConfirmDialogModule,
     ReactiveFormsModule,
     FloatLabelModule,
-    NgStyle,
     DockModule
   ],
   templateUrl: './overview.component.html',
@@ -45,6 +43,8 @@ export class OverviewComponent {
 
   protected articleSelector: string = this.selectorChoices[0]
 
+  protected searchQuery: string = ""
+
   protected creationDialogVisible: boolean = false
 
   protected creationForm = new FormGroup({
@@ -56,7 +56,7 @@ export class OverviewComponent {
   }
 
   reloadArticles() {
-    this.contentService.loadArticles(this.articleSelector == this.selectorChoices[0])
+    this.contentService.loadArticles(this.articleSelector === this.selectorChoices[0], this.searchQuery, () => {}, false)
   }
 
   deleteArticle(article: ArticleResponse) {
