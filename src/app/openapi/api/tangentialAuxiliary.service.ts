@@ -33,7 +33,7 @@ import { Configuration }                                     from '../configurat
 })
 export class TangentialAuxiliaryService {
 
-    protected basePath = 'http://localhost:8080';
+    protected basePath = 'https://api.medaware.dev';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
