@@ -37,7 +37,7 @@ import { Configuration }                                     from '../configurat
 })
 export class TangentialAuthService {
 
-    protected basePath = 'https://api.medaware.dev';
+    protected basePath = 'http://localhost:8080';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
